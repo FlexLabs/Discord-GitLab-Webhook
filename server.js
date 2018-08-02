@@ -955,11 +955,11 @@ function shareDiscordErrorFromSend(originalError, originalContext, context) {
   return function(e) {
     console.log('Error Context: ' + context);
     console.error(e);
-    if (HOOK) {
-      HOOK.send(`[${CONFIG.bot.name}] encountered an error...\nInitial Context: ${originalContext}\nInitial Error: ${originalError.message}\nSubsequent Context: ${context}\nSubsequent Error: ${e.message}`)
-        .then((m) => console.log(`Sent an error report via webhook`))
-        .catch(console.error);
-    }
+    // if (HOOK) {
+    //   HOOK.send(`[${CONFIG.bot.name}] encountered an error...\nInitial Context: ${originalContext}\nInitial Error: ${originalError.message}\nSubsequent Context: ${context}\nSubsequent Error: ${e.message}`)
+    //     .then((m) => console.log(`Sent an error report via webhook`))
+    //     .catch(console.error);
+    // }
   }
 }
 
@@ -1218,16 +1218,16 @@ function getStatusEmbed(key) {
 CLIENT.on('ready', () => {
   console.log(`${CONFIG.bot.name} is ready to receive data`);
 
-  HOOK.send('', { embeds: [getStatusEmbed(readyMsg)] })
-    .then((message) => console.log(`Sent ready embed`))
-    .catch(shareDiscordError(null, `[onReady] Sending status embed [${readyMsg}] via WebHook: ${HOOK.name}`));
+  // HOOK.send('', { embeds: [getStatusEmbed(readyMsg)] })
+  //   .then((message) => console.log(`Sent ready embed`))
+  //   .catch(shareDiscordError(null, `[onReady] Sending status embed [${readyMsg}] via WebHook: ${HOOK.name}`));
 
   if (disconnectHandled) {
     disconnectHandled = false;
 
     // Process stored data
     let numStored = storedData.length;
-    let collectedEmbeds = [getStatusEmbed('recovery')];
+    let collectedEmbeds = [];
     for (let i = 0; i < numStored; i++) {
       collectedEmbeds.push(storedData.pop());
     }
@@ -1248,9 +1248,9 @@ CLIENT.on('ready', () => {
         () => {
           console.log('Ready to listen at ', app.address());
 
-          HOOK.send('', { embeds: [getStatusEmbed('listening')] })
-            .then((message) => console.log(`Sent listening embed`))
-            .catch(shareDiscordError(null, `[onListen] Sending status [listening] via WebHook: ${HOOK.name}`));
+          // HOOK.send('', { embeds: [getStatusEmbed('listening')] })
+          //   .then((message) => console.log(`Sent listening embed`))
+          //   .catch(shareDiscordError(null, `[onListen] Sending status [listening] via WebHook: ${HOOK.name}`));
         });
     }
 
